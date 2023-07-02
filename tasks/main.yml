@@ -1,5 +1,5 @@
 - name: download Hazelcast
-  get_url: url=https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-5.3.1.zip
+  get_url: url=https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-5.3.1.zip dest=/root/hazelcast-enterprise-5.3.1.zip
 
 - name: unarchive Hazelcast
   unarchive: src=/root/hazelcast-enterprise-5.3.1.zip remote_src=True dest=/opt
