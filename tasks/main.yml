@@ -28,3 +28,8 @@
 
 - name: enable hazelcast service
   service: name=hazelcast state=started enabled=no
+- name: restart service
+  service:
+    name: hazelcast
+    state: restarted
+  when: service_conf.changed
