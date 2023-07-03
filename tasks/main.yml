@@ -27,4 +27,4 @@
   notify: systemctl daemon-reload
 
 - name: enable hazelcast service
-  service: name=hazelcast state=started enabled=no
+  service: name=hazelcast state=started enabled=yes
