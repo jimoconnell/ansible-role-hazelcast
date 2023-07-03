@@ -1,4 +1,4 @@
 ---
 # vars file for ansible-role-hazelcast
-vars_files:
-  - vars/secrets.yml
+# vars_files:
+#   - vars/secrets.yml
