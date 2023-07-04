@@ -46,6 +46,8 @@
   become: yes  
 - name: create /opt/hazelcast
   shell: cp -r /opt/hazelcast-enterprise-{{ hazelcast_version }} /opt/hazelcast creates=/opt/hazelcast
+ # /opt/hazelcast/config
+ 
   
 - name: Create  /opt/hazelcast/logs if it does not exist
   ansible.builtin.file:
@@ -53,6 +55,12 @@
     state: directory
     mode: '0777'
 
+- name: Create  /opt/hazelcast/config if it does not exist
+  ansible.builtin.file:
+    path: /opt/hazelcast/config
+    state: directory
+    mode: '0755'
+    
 - name: print groups[hazelcast_group_name]
   debug: var=groups[hazelcast_group_name]
 
