@@ -24,7 +24,7 @@
 
 - name: put systemd unit file
   template: src=hazelcast.service dest=/etc/systemd/system/hazelcast.service backup=yes
-  notify: systemctl daemon-reload
+  # notify: systemctl daemon-reload
 
 - name: enable hazelcast service
   service: name=hazelcast state=started enabled=no
