@@ -1,12 +1,21 @@
-Role Name
+ansible-role-hazelcast
 =========
 
-This Ansible Role is not working yet! 
+## This Ansible Role is not production ready! 
+## As of today, July 4, 2023, it does not work!
+
+This is an Ansible role for installing Hazelcast Enterprise.
+This is **not** an official Hazelcast product, simply a side project by someone who happens to work there.
+This software is not supported, but comments and bug reports are welcome.
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Hazelcast Enterprise requires a license key to work.  This isn't in the zip file you download from Hazelcast.  
+
+
+If you need a license and don't have one, please visit https://hazelcast.com/pricing/
 
 Role Variables
 --------------
@@ -21,18 +30,38 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+---
+- name: Ensure Java 17 and Hazelcast is installed
+  hosts: vmware
+  become: yes
+  vars:
+    hazelcast_version: "5.1.2"
+  roles:
+    - jimoconnell.ansible_role_hazelcast
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+  tasks:
+    - name: Copy the local hazelcast.xml file
+      copy:
+        src: ./hazelcast.xml
+        dest: /opt/hazelcast/config/hazelcast.xml
+        owner: root
+        group: root
+        mode: '0644'
+      
+    - name: Start Hazelcast service
+      systemd: 
+        name: hazelcast.service
+        state: started
+        daemon_reload: yes
+```
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+

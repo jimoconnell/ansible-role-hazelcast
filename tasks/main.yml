@@ -46,7 +46,7 @@
   ansible.builtin.file:
     path: /opt/hazelcast/logs
     state: directory
-    mode: '0755'
+    mode: '0777'
 
 - name: print groups[hazelcast_group_name]
   debug: var=groups[hazelcast_group_name]
