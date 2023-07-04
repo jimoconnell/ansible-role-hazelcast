@@ -5,27 +5,47 @@ ansible-role-hazelcast
 ## As of today, July 4, 2023, it does not work!
 
 This is an Ansible role for installing Hazelcast Enterprise.
-This is **not** an official Hazelcast product, simply a side project by someone who happens to work there.
-This software is not supported, but comments and bug reports are welcome.
+This is **not** an official Hazelcast product, simply a side project by someone who happens to work there. 
+
+* This software is not supported. 
+* I have written this for my own convenience.  
+* This software is not supported. 
+* It works for me, but may break at any time.
+* This software is not supported. 
+* Comments and bug reports are welcome. (Use: https://github.com/jimoconnell/ansible-role-hazelcast)
+* This software is not supported. 
+* You have been warned!
 
 
 Requirements
 ------------
 
 Hazelcast Enterprise requires a license key to work.  This isn't in the zip file you download from Hazelcast.  
-
+To get around this, put your `hazelcast.xml` file that includes your key in the same directory where you have your playbook. (See the example playbook below.) 
+It should have a line like the following (non-working) license string, most likely:
+```
+ <license-key>YOURLICENSE#3NODES1234567890000000</license-key>
+ ```
 
 If you need a license and don't have one, please visit https://hazelcast.com/pricing/
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+In the sample playbook below, the Hazelcast Version is set with:
+```
+  vars:
+    hazelcast_version: "5.1.2"
+```    
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+I will most likely create a role for Management Center, but there isn't one yet.
+To install this role, cd into your playbook directory and run:
+```
+ansible-galaxy install jimoconnell.ansible_role_hazelcast
+```
 
 Example Playbook
 ----------------
@@ -36,7 +56,7 @@ Example Playbook
   hosts: vmware
   become: yes
   vars:
-    hazelcast_version: "5.1.2"
+    hazelcast_version: "5.3.1"
   roles:
     - jimoconnell.ansible_role_hazelcast
 
