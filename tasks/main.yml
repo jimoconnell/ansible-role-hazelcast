@@ -48,11 +48,6 @@
     state: directory
     mode: '0755'
 
-- name: Create  /opt/hazelcast/bin if it does not exist
-  ansible.builtin.file:
-    path: /opt/hazelcast/bin
-    state: directory
-    mode: '0755'
 - name: print groups[hazelcast_group_name]
   debug: var=groups[hazelcast_group_name]
 
@@ -71,14 +66,8 @@
     dest: /etc/systemd/system/hazelcast.service 
     backup: yes
 
-- name: enable hazelcast service
+- name: configure hazelcast service but do not start
   service: 
     name: hazelcast 
-    state: started 
-    enabled: yes
-
-- name: restart service
-  service:
-    name: hazelcast
-    state: restarted
-  when: service_conf.changed
+    state: stopped
+    enabled: no
