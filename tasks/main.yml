@@ -1,16 +1,34 @@
 - name: Install unzip on Debian-based systems
-  ...
-  
+  apt:
+    name: unzip
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: yes
+
 - name: Install unzip on RedHat-based systems
-  ...
-  
+  yum:
+    name: unzip
+    state: present
+  when: ansible_os_family == "RedHat"
+  become: yes
+
 - name: Install Java 17 on Debian-based systems
-  ...
-  
+  apt:
+    name: openjdk-17-jdk
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: yes
+
 - name: Install Java 17 on RedHat-based systems
-  ...
-  
-- name: download Hazelcast
+  yum:
+    name: java-17-openjdk-devel
+    state: present
+  when: ansible_os_family == "RedHat"
+  become: yes
+
+-- name: download Hazelcast
   get_url: 
     url: https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-{{ hazelcast_version }}.zip 
     dest: /root/hazelcast-enterprise-{{ hazelcast_version }}.zip
@@ -25,19 +43,31 @@
   shell: cp -r /opt/hazelcast-enterprise-{{ hazelcast_version }} /opt/hazelcast creates=/opt/hazelcast
   
 - name: Create  /opt/hazelcast/logs if it does not exist
-  ...
-  
+  ansible.builtin.file:
+    path: /opt/hazelcast/logs
+    state: directory
+    mode: '0755'
+
 - name: print groups[hazelcast_group_name]
-  ...
+  debug: var=groups[hazelcast_group_name]
 
 - name: print hostvars[host]
-  ...
+  debug: var=hostvars[groups[hazelcast_group_name][0]]
 
 - name: put Hazelcast config file
-  ...
+  template: 
+    src: hazelcast.xml 
+    dest: /opt/hazelcast/config/hazelcast.xml 
+    backup: yes
 
 - name: put systemd unit file
-  ...
+  template: 
+    src: hazelcast.service 
+    dest: /etc/systemd/system/hazelcast.service 
+    backup: yes
 
 - name: configure hazelcast service but do not start
-  ...
+  service: 
+    name: hazelcast 
+    state: stopped
+    enabled: no
