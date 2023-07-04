@@ -28,7 +28,7 @@
   when: ansible_os_family == "RedHat"
   become: yes
 
--- name: download Hazelcast
+- name: download Hazelcast
   get_url: 
     url: https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-{{ hazelcast_version }}.zip 
     dest: /root/hazelcast-enterprise-{{ hazelcast_version }}.zip
