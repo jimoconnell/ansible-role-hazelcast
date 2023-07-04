@@ -2,3 +2,5 @@
 # vars file for ansible-role-hazelcast
 # vars_files:
 #   - vars/secrets.yml
+vars:
+  hazelcast_group_name: hazelcast

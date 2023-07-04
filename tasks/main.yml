@@ -10,9 +10,6 @@
     createhome: yes
     state: present
 
-vars:
-  hazelcast_group_name: hazelcast
-
 - name: Install unzip on Debian-based systems
   apt:
     name: unzip
@@ -75,7 +72,7 @@ vars:
     path: /opt/hazelcast/config
     state: directory
     mode: '0755'
-
+    
 - name: print groups[hazelcast_group_name]
   debug: var=groups[hazelcast_group_name]
 
