@@ -38,7 +38,12 @@
     src: /root/hazelcast-enterprise-{{ hazelcast_version }}.zip 
     remote_src: True 
     dest: /opt
-  
+
+- name: Ensure /opt/hazelcast does not exist (in case you are changing versions.)
+  ansible.builtin.file:
+    path: /opt/hazelcast
+    state: absent
+  become: yes  
 - name: create /opt/hazelcast
   shell: cp -r /opt/hazelcast-enterprise-{{ hazelcast_version }} /opt/hazelcast creates=/opt/hazelcast
   
