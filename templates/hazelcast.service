@@ -6,7 +6,7 @@ Environment="MIN_HEAP_SIZE=4G"
 Environment="MAX_HEAP_SIZE=4G"
 Type=forking
 PIDFile=/opt/hazelcast/bin/hazelcast_instance.pid
-ExecStart="/opt/hazelcast/bin/hz start -c /opt/hazelcast/config/hazelcast.xml"
+ExecStart="/opt/hazelcast/bin/hz start"
 
 [Install]
 WantedBy=multi-user.target
