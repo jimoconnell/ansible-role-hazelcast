@@ -1,20 +1,3 @@
-- name: Ensure Java 17 is installed
-  # hosts: vmware
-  become: yes
-  tasks:
-  - name: Install the OpenJDK package
-    apt:
-      name: openjdk-17-jdk
-      state: present
-      update_cache: yes
-    when: ansible_os_family == "Debian"
-
-  - name: Install the OpenJDK package
-    yum:
-      name: java-17-openjdk-devel
-      state: present
-    when: ansible_os_family == "RedHat"
-
 - name: Install unzip on Debian-based systems
   apt:
     name: unzip
@@ -30,11 +13,31 @@
   when: ansible_os_family == "RedHat"
   become: yes
 
+- name: Install Java 17 on Debian-based systems
+  apt:
+    name: openjdk-17-jdk
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: yes
+
+- name: Install Java 17 on RedHat-based systems
+  yum:
+    name: java-17-openjdk-devel
+    state: present
+  when: ansible_os_family == "RedHat"
+  become: yes
+
 - name: download Hazelcast
-  get_url: url=https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-5.3.1.zip dest=/root/hazelcast-enterprise-5.3.1.zip
+  get_url: 
+    url: https://repository.hazelcast.com/download/hazelcast-enterprise/hazelcast-enterprise-5.3.1.zip 
+    dest: /root/hazelcast-enterprise-5.3.1.zip
 
 - name: unarchive Hazelcast
-  unarchive: src=/root/hazelcast-enterprise-5.3.1.zip remote_src=True dest=/opt
+  unarchive: 
+    src: /root/hazelcast-enterprise-5.3.1.zip 
+    remote_src: True 
+    dest: /opt
 
 - name: create /opt/hazelcast
   shell: cp -r /opt/hazelcast-enterprise-5.3.1 /opt/hazelcast creates=/opt/hazelcast
@@ -52,14 +55,23 @@
   debug: var=hostvars[groups[hazelcast_group_name][0]]
 
 - name: put Hazelcast config file
-  template: src=hazelcast.xml dest=/opt/hazelcast/config/hazelcast.xml backup=yes
+  template: 
+    src: hazelcast.xml 
+    dest: /opt/hazelcast/config/hazelcast.xml 
+    backup: yes
 
 - name: put systemd unit file
-  template: src=hazelcast.service dest=/etc/systemd/system/hazelcast.service backup=yes
-  # notify: systemctl daemon-reload
+  template: 
+    src: hazelcast.service 
+    dest: /etc/systemd/system/hazelcast.service 
+    backup: yes
 
 - name: enable hazelcast service
-  service: name=hazelcast state=started enabled=no
+  service: 
+    name: hazelcast 
+    state: started 
+    enabled: yes
+
 - name: restart service
   service:
     name: hazelcast
