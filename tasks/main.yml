@@ -1,5 +1,5 @@
 - name: Ensure Java 17 is installed
-  hosts: vmware
+  # hosts: vmware
   become: yes
   tasks:
   - name: Install the OpenJDK package
