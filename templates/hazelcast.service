@@ -1,12 +1,13 @@
 [Unit]
 Description=Hazelcast service
+After=syslog.target network.target
 
 [Service]
 Environment="MIN_HEAP_SIZE=4G"
 Environment="MAX_HEAP_SIZE=4G"
 Type=forking
 PIDFile=/opt/hazelcast/bin/hazelcast_instance.pid
-ExecStart=/opt/hazelcast/bin/hz-start
+ExecStart=/opt/hazelcast/bin/hz-start 
 
 [Install]
 WantedBy=multi-user.target
